@@ -1,6 +1,9 @@
 <?php
-
+namespace App\Http\Controllers;
+use App\Http\Middleware\VarietyMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\UserMiddleware;
+use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +33,10 @@ Route::get('/library', function () {
     return view('library');
 });
 
+Route::get('/add', function () {
+    return view('student.user-add');
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -39,3 +46,19 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+Route::get('/users',[UserController::class,'index'])->middleware(VarietyMiddleware::class);
+Route::get('/users-create',[UserController::class,'create']);
+Route::get('/users/{id}', [UserController::class, 'show'])->middleware(UserMiddleware::class);
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->middleware(UserMiddleware::class);
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::get('/users-add', [UserController::class, 'add']);
+# Route::post('/users', [UserController::class, 'store']);
+
+#labact 3
+Route::post('/post', [PostController::class, 'store'])->name('post.store');
+Route::get('/showdata/{id}', [UserController::class, 'showData'])->name('showdata');
+Route::get('/editdata/{id}', [UserController::class, 'editBlog'])->name('editdata')->middleware(AdminMiddleware::class);
+Route::put('/updatedata/{id}', [UserController::class, 'updateBlog'])->name('updatedata');
+Route::delete('/deletedata/{id}', [PostController::class, 'delete'])->name('deletedata');

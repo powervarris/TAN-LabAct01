@@ -26,12 +26,12 @@
             box-shadow: 0 0 0 2px #f56565; /* focus:ring-red-500 */
         }
         .form-button {
-            width: 50%; /* w-1/2 */
-            padding: 0.5rem 1rem; /* px-4 py-2 */
-            background-color: #f56565; /* bg-red-500 */
-            color: #fff; /* text-white */
-            border-radius: 0.5rem; /* rounded-lg */
-            transition: background-color 0.2s; /* hover:bg-red-600 */
+            width: 50%;
+            padding: 0.5rem 1rem;
+            background-color: #f56565;
+            color: #fff;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
         }
         .form-button:hover {
             background-color: #e53e3e; /* bg-red-600 */
