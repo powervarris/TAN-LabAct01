@@ -32,12 +32,44 @@
 
 <div class="container mx-auto">
     <h2 class="text-3xl font-bold text-center">Upload Blog</h2>
-    <form class="upload-form" action="/users" method="POST">
+    @if ($errors->any())
+        <div class="red-div">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <form class="upload-form" method="POST" action="{{ route('post.store') }}">
             @csrf
-            <input type="text" name="author" placeholder="Author">
-            <input type="text" name="blog_title" placeholder="Blog Title">
-            <textarea name="blog_short_description" placeholder="Short Description"></textarea>
-            <button type="submit">Add User</button>
+        <div class="form-group row">
+            <label for="author" class="col-sm-2 col-form-label font-weight-bold">Author:</label>
+            <div class="col-sm-10">
+                <input type="text" id="author" name="author" class="form-control" value="{{ old('author') }}"></input>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="blog_title" class="col-sm-2 col-form-label font-weight-bold">Blog Title:</label>
+            <div class="col-sm-10">
+                <input type="text" id="blog_title" name="blog_title" class="form-control" value="{{old('blog_title')}}"></input>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="blog_short_description" class="col-sm-2 col-form-label font-weight-bold">Short Description:</label>
+            <div class="col-sm-10">
+                <textarea id="blog_short_description" name="blog_short_description" class="form-control">{{ old('blog_short_description') }}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button><a href="/users" class="bg-blue-500 hover:bg-blue-700 text-black py-2 px-4 rounded">Back</a></button>
+            </div>
+        </div>
         </form>
 </div>
 

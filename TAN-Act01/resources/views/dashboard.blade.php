@@ -119,6 +119,8 @@
             @if (Route::has('login'))
                 @auth
                     <a href="/market" class="hover:text-gray-400">Market</a>
+                    <a href="/myblog" class="hover:text-gray-400">My Blogs</a>
+                    <a href="/users" class="hover:text-gray-400">Blogs</a>
                     <div class="dropdown">
                         <a class="hover:text-gray-400">{{ Auth::user()->name }}</a>
                         <div class="dropdown-content">

@@ -12,6 +12,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->group('user', [
+            \App\Http\Middleware\UserMiddleware::class,
+        ]);
+
+        $middleware->group('admin', [
+            \App\Http\Middleware\AdminMiddleware::class,
+        ]);
+
+        $middleware->group('variety', [
+            \App\Http\Middleware\VarietyMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

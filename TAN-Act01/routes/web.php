@@ -47,9 +47,9 @@ Route::middleware([
     })->name('dashboard');
 });
 
-
+/**
 Route::get('/users',[UserController::class,'index'])->middleware(VarietyMiddleware::class);
-Route::get('/users-create',[UserController::class,'create']);
+Route::get('/users-create',[UserController::class,'create'])->middleware(AdminMiddleware::class);
 Route::get('/users/{id}', [UserController::class, 'show'])->middleware(UserMiddleware::class);
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->middleware(UserMiddleware::class);
 Route::put('/users/{id}', [UserController::class, 'update']);
@@ -62,3 +62,27 @@ Route::get('/showdata/{id}', [UserController::class, 'showData'])->name('showdat
 Route::get('/editdata/{id}', [UserController::class, 'editBlog'])->name('editdata')->middleware(AdminMiddleware::class);
 Route::put('/updatedata/{id}', [UserController::class, 'updateBlog'])->name('updatedata');
 Route::delete('/deletedata/{id}', [PostController::class, 'delete'])->name('deletedata');
+Route::get('/myblog', [PostController::class, 'index'])->name('users');
+ */
+
+Route::middleware('user')->group(function () {
+    Route::get('/users/{id}', [UserController::class, 'show']);
+    Route::get('/users/{id}/edit', [UserController::class, 'edit']);
+});
+
+Route::middleware('admin')->group(function () {
+    Route::get('/users-create', [UserController::class, 'create']);
+    Route::get('/editdata/{id}', [UserController::class, 'editBlog'])->name('editdata');
+    Route::get('/users-add', [UserController::class, 'add']);
+});
+
+Route::middleware('variety')->group(function () {
+    Route::get('/users', [UserController::class, 'index']);
+});
+
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::post('/post', [PostController::class, 'store'])->name('post.store');
+Route::get('/showdata/{id}', [UserController::class, 'showData'])->name('showdata');
+Route::put('/updatedata/{id}', [UserController::class, 'updateBlog'])->name('updatedata');
+Route::delete('/deletedata/{id}', [PostController::class, 'delete'])->name('deletedata');
+Route::get('/myblog', [PostController::class, 'index'])->name('users');

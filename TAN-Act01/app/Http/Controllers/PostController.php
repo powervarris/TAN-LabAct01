@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+
+    public function index()
+    {
+        $user = Auth::user();
+        $blogs = $user->blogs;
+
+        return view('student.user-myblog', compact('blogs'));
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([

@@ -24,13 +24,18 @@
                 <div class="dropdown-content">
                     <a href="/games" class="hover:text-gray-400">Games</a>
                     <a href="/tutorial" class="hover:text-gray-400">Gameplay</a>
+                    <a href="/about" class="hover:text-gray-400">About</a>
+                    <a href="/contact" class="hover:text-gray-400">Contact</a>
                 </div>
             </div>
-            <a href="/about" class="hover:text-gray-400">About</a>
-            <a href="/contact" class="hover:text-gray-400">Contact</a>
+            @if (Auth::user() && Auth::user()->role == 'admin')
+                <a href="/users-add" class="hover:text-gray-400">Create Blog</a>
+            @endif
             @if (Route::has('login'))
                 @auth
                     <a href="/market" class="hover:text-gray-400">Market</a>
+                    <a href="/myblog" class="hover:text-gray-400">My Blogs</a>
+                    <a href="/users" class="hover:text-gray-400">Blogs</a>
                     <div class="dropdown">
                         <a class="hover:text-gray-400">{{ Auth::user()->name }}</a>
                         <div class="dropdown-content">
@@ -70,8 +75,13 @@
                 <th class="px-4 py-2">Short Description</th>
                 <th class="px-4 py-2">Date Created</th>
                 <th class="px-4 py-2">View Details</th>
-                <th class="px-4 py-2"><a href="/users-add" class="text-white">Edit Blog</a></th>
-                <th class="px-4 py-2"><a href="/users-add" class="text-white">Delete Blog</a></th>
+                @if (Auth::user() && Auth::user()->role == 'admin')
+                <th class="px-4 py-2">
+                    <a class="text-white">Edit Blog</a></th>
+                @endif
+                @if (Auth::user() && Auth::user()->role == 'admin')
+                <th class="px-4 py-2"><a class="text-white">Delete Blog</a></th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -82,15 +92,20 @@
                 <td class="border px-4 py-2">{{$blog['userid']}}</td>
                 <td class="border px-4 py-2">{{$blog['blog_short_description']}}</td>
                 <td class="border px-4 py-2">{{$blog['date_created']}}</td>
-                <td> <button> <a href="{{ route('showdata', ['id' => $blog['id']]) }}">Show</a> </button> </td>
-                <th> <button> <a href="{{ route('editdata', ['id' => $blog['id']]) }}">Edit</a> </button> </th>
+                <td> <button class="btn btn-primary"> <a href="{{ route('showdata', ['id' => $blog['id']]) }}">Show</a> </button> </td>
+                @if (Auth::user() && Auth::user()->role == 'admin')
+                <th><button class="btn btn-primary" style="background: #4CAF50"> <a href="{{ route('editdata', ['id' => $blog['id']]) }}">Edit</a> </button>
+                    @endif
+                </th>
+                @if (Auth::user() && Auth::user()->role == 'admin')
                 <th>
                    <form method="POST" action="{{ route('deletedata', ['id' => $blog['id']]) }}">
                    @csrf
                    @method('DELETE')
-                   <button type="submit">Delete</button>
+                   <button class="btn btn-danger" style="background: #dc3939" type="submit">Delete</button>
                    </form>
                 </th>
+                @endif
             </tr>
             @endforeach
         </tbody>

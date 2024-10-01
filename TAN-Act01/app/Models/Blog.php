@@ -12,7 +12,7 @@ class Blog extends Model
     protected $fillable = ['author', 'blog_title', 'blog_short_description', 'date_created', 'userid'];
 
     public function user()
-        {
-            return $this->belongsTo(User::class, 'userid', 'email');
-        }
+    {
+        return $this->belongsTo(User::class, 'userid', 'email');
+    }
 }

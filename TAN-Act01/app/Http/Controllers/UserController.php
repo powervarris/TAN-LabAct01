@@ -89,7 +89,10 @@ class UserController extends Controller
 
                 #labact 3 code
                 #$blogs = Blog::all();
+
+
                 $blogs = Blog::paginate(5);
+                #$blogs = Blog::orderBy('created_at', 'asc')->paginate(10);
 
                 return view('student.user', ['blogs' => $blogs]);
             }
